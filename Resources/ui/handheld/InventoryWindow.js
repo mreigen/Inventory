@@ -1,33 +1,48 @@
-function ControlsWindow(title) {
+function InventoryWindow(title) {
+  var InventoryWindowStyles = require("ui/styles/InventoryWindowStyles");
+  var styles = new InventoryWindowStyles();
+  
 	var self = Ti.UI.createWindow({
 		title:title,
-		backgroundColor:'white'
+		backgroundColor:"white"
 	});
+	
+	/*
+	var search = Ti.UI.createSearchBar({
+    showCancel: false,
+    height: 42,
+    width: 260,
+    top: 0
+  });
+  
+	self.setTitleControl(search);
+	*/
+	
 /*	
 	// create table view data object
 	var data = [
-		{title:'Slider', hasChild:true, test:'ui/common/controls/slider'},
-		{title:'Switch', hasChild:true, test:'ui/common/controls/switch'},
-		{title:'Activity Indicator', hasChild:true, test:'ui/common/controls/activity_indicator'},
-		{title:'Progress Bar', hasChild:true, test:'ui/common/controls/progress_bar'},
-		{title:'Button', hasChild:true, test:'ui/common/controls/button'},
-		{title:'Label', hasChild:true, test:'ui/common/controls/label'},
-		{title:'Text Field', hasChild:true, test:'ui/common/controls/textfield'},
-		{title:'Text Area', hasChild:true, test:'ui/common/controls/textarea'}
+		{title:"Slider", hasChild:true, test:"ui/common/controls/slider"},
+		{title:"Switch", hasChild:true, test:"ui/common/controls/switch"},
+		{title:"Activity Indicator", hasChild:true, test:"ui/common/controls/activity_indicator"},
+		{title:"Progress Bar", hasChild:true, test:"ui/common/controls/progress_bar"},
+		{title:"Button", hasChild:true, test:"ui/common/controls/button"},
+		{title:"Label", hasChild:true, test:"ui/common/controls/label"},
+		{title:"Text Field", hasChild:true, test:"ui/common/controls/textfield"},
+		{title:"Text Area", hasChild:true, test:"ui/common/controls/textarea"}
 	];
 	
-	if (Ti.Platform.osname !== 'mobileweb') {
-		data.push({title:'Button States', hasChild:true, test:'ui/common/controls/button_state'});
-		data.push({title:'Search Bar', hasChild:true, test:'ui/common/controls/searchbar'});
-		data.push({title:'Picker', hasChild:true, test:'ui/common/controls/picker'});
+	if (Ti.Platform.osname !== "mobileweb") {
+		data.push({title:"Button States", hasChild:true, test:"ui/common/controls/button_state"});
+		data.push({title:"Search Bar", hasChild:true, test:"ui/common/controls/searchbar"});
+		data.push({title:"Picker", hasChild:true, test:"ui/common/controls/picker"});
 	}
 	
 	// add iphone specific tests
-	if (Titanium.Platform.name == 'iPhone OS') {
-		data.push({title:'Button Bar', hasChild:true, test:'ui/handheld/ios/controls/buttonbar'});
-		data.push({title:'Tabbed Bar', hasChild:true, test:'ui/handheld/ios/controls/tabbedbar'});
-		data.push({title:'System Buttons', hasChild:true, test:'ui/handheld/ios/controls/system_buttons'});
-		data.push({title:'Toolbar', hasChild:true, test:'ui/handheld/ios/controls/toolbar'});
+	if (Titanium.Platform.name == "iPhone OS") {
+		data.push({title:"Button Bar", hasChild:true, test:"ui/handheld/ios/controls/buttonbar"});
+		data.push({title:"Tabbed Bar", hasChild:true, test:"ui/handheld/ios/controls/tabbedbar"});
+		data.push({title:"System Buttons", hasChild:true, test:"ui/handheld/ios/controls/system_buttons"});
+		data.push({title:"Toolbar", hasChild:true, test:"ui/handheld/ios/controls/toolbar"});
 	}
 */
   var data = [];
@@ -35,6 +50,8 @@ function ControlsWindow(title) {
   var testTitle = "Your item's title";
   var testPrice = "150";
   var testStatus = "sold";
+  var amountOwned = 0;
+  var amountGotBack = 0;
   
   //var testItemData = {id: itemId, image: testImage, title: testTitle, price: testPrice, status: testStatus};
 	var input = [
@@ -48,31 +65,40 @@ function ControlsWindow(title) {
     {id: 8, image: testImage, title: testTitle + " 8", price: testPrice, status: testStatus},
     {id: 9, image: testImage, title: testTitle + " 9", price: testPrice, status: testStatus},
     {id: 10, image: testImage, title: testTitle + " 10", price: testPrice, status: testStatus},
-	];	
-  	
-	var rowHeight = 70;
-	var leftViewWidth = 70;
-	var detailViewWidth = 170;
-	var rightViewWidth = 80;
+	];
 	
 	for (var i = 0; i < input.length; i++) {
     var row = buildRow(input[i], 
                       {
-                        rowHeight: rowHeight, 
-                        leftViewWidth: leftViewWidth,
-                        detailViewWidth: detailViewWidth
+                        rowHeight: styles.rowHeight, 
+                        leftViewWidth: styles.leftViewWidth,
+                        detailViewWidth: styles.detailViewWidth
                       });
-    data.push(row);  
+    data.push(row);
+    amountOwned += parseInt(input[i].price);
 	}
 	
+	// create top view
+	var topView = Ti.UI.createView(styles.topView());
+	// labels on top view
+	var amountOwnedLabel = Ti.UI.createLabel(styles.amountOwnedLabel());
+	amountOwnedLabel.text = "$" + amountOwned.toString();
+	
+	var amountGotBackLabel = Ti.UI.createLabel(styles.amountGotBackLabel());
+	amountGotBackLabel.text = "$" + amountGotBack.toString();
+	
+	// add labels to top view
+	topView.add(amountOwnedLabel);
+	topView.add(amountGotBackLabel);
+	
+	
 	// create table view
-	for (var i = 0; i < data.length; i++ ) { data[i].color = '#000'; data[i].font = {fontWeight:'bold'} };
-	var tableview = Ti.UI.createTableView({
-		data:data
-	});
+	for (var i = 0; i < data.length; i++ ) { data[i].color = "#000"; data[i].font = {fontWeight:"bold"} };
+	var tableview = Ti.UI.createTableView(styles.tableView());
+	tableview.data = data;
 	
 	// create table view event listener
-	tableview.addEventListener('click', function(e) {
+	tableview.addEventListener("click", function(e) {
 		if (e.rowData.test) {
 			var ExampleWindow = require(e.rowData.test),
 				win = new ExampleWindow({
@@ -84,6 +110,8 @@ function ControlsWindow(title) {
 		}
 	});
 	
+	// add top view to window
+  self.add(topView);
 	// add table view to the window
 	self.add(tableview);
 	
@@ -92,63 +120,24 @@ function ControlsWindow(title) {
     var leftViewWidth = options["leftViewWidth"];
     var detailViewWidth = options["detailViewWidth"];
     
-    var row = Ti.UI.createTableViewRow({
-      height: rowHeight
-    });
+    var row = Ti.UI.createTableViewRow(styles.row());
     
-    var _detailView = Ti.UI.createView({
-                                        width: detailViewWidth, 
-                                        height: rowHeight, 
-                                        left: leftViewWidth, 
-                                        top: 0
-                                       });
+    var _detailView = Ti.UI.createView(styles.detailView());
     
-    var _leftView = Ti.UI.createView({
-                                      width: leftViewWidth, 
-                                      height: rowHeight, 
-                                      left: 0
-                                     });
+    var _leftView = Ti.UI.createView(styles.leftView());
     
-    var _rightView = Ti.UI.createView({
-                                  width: rightViewWidth, 
-                                  height: rowHeight, 
-                                  right: 0
-                                 });
+    var _rightView = Ti.UI.createView(styles.rightView());
     
-    var _leftImageView = Ti.UI.createImageView({ 
-                                                width: leftViewWidth, 
-                                                height: leftViewWidth, 
-                                                left: 0, 
-                                                top: 0, 
-                                                image: testImage
-                                               });
+    var _leftImageView = Ti.UI.createImageView(styles.leftImageView());
+    _leftImageView.image = testImage;
     
-    var priceLabel = Ti.UI.createLabel({ 
-      text: "$" + rawData.price, 
-      height:'auto', 
-      width:'auto',
-      color:'#000', 
-      font:{fontSize:14},
-      top: leftViewWidth,
-      left: 10,
-      top: 32,
-      textAlign:'center' });
+    var priceLabel = Ti.UI.createLabel(styles.priceLabel());
+    priceLabel.text = "$" + rawData.price;
 
-    var titleLabel = Ti.UI.createLabel({ 
-      text: rawData.title, 
-      height:'auto', 
-      width:'auto', 
-      color:'#000', 
-      font:{fontSize:14},
-      left: 10,
-      top: 8,
-      textAlign:'center' });
+    var titleLabel = Ti.UI.createLabel(styles.titleLabel());
+    titleLabel.text = rawData.title;
     
-    var sellButton = Ti.UI.createButton({
-      title: "Sell",
-      width: rightViewWidth - 10,
-      height: rowHeight / 2
-    });
+    var sellButton = Ti.UI.createButton(styles.sellButton());
     
     // detail view in the middle
     _detailView.add(titleLabel);          
@@ -176,8 +165,8 @@ function ControlsWindow(title) {
     
     function openItemWindow(rawData){
       self.containingTab.open(Ti.UI.createWindow({
-        title: L('Item ' + rawData.id),
-        backgroundColor: 'white'
+        title: L("Item " + rawData.id),
+        backgroundColor: "white"
       }));
     }
     
@@ -190,4 +179,4 @@ function ControlsWindow(title) {
 	return self;
 };
 
-module.exports = ControlsWindow;
+module.exports = InventoryWindow;
