@@ -46,7 +46,7 @@ function InventoryWindow(title) {
 	}
 */
   var data = [];
-  var testImage = "https://fbcdn-creative-a.akamaihd.net/ads-ak-snc7/s110x80/v565063/flyers/112/63/13436905681963487944_1_64666224.jpg"; //"/images/flower.jpg";
+  var testImage = "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTlhc34yq75661abqhBAleSexZPLJ5qUJkx5KoGfbYnPSoPc4b9";
   var testTitle = "Your item's title";
   var testPrice = "150";
   var testStatus = "sold";
@@ -67,13 +67,8 @@ function InventoryWindow(title) {
     {id: 10, image: testImage, title: testTitle + " 10", price: testPrice, status: testStatus},
 	];
 	
-	for (var i = 0; i < input.length; i++) {
-    var row = buildRow(input[i], 
-                      {
-                        rowHeight: styles.rowHeight, 
-                        leftViewWidth: styles.leftViewWidth,
-                        detailViewWidth: styles.detailViewWidth
-                      });
+	for (var i = 0; i < input.length; i += 3) {
+    var row = buildRow([input[i], input[i+1], input[i+2]]);
     data.push(row);
     amountOwned += parseInt(input[i].price);
 	}
@@ -115,53 +110,29 @@ function InventoryWindow(title) {
 	// add table view to the window
 	self.add(tableview);
 	
-  function buildRow(rawData, options) {
-    var rowHeight = options["rowHeight"];
-    var leftViewWidth = options["leftViewWidth"];
-    var detailViewWidth = options["detailViewWidth"];
-    
+  function buildRow(rawData) {
     var row = Ti.UI.createTableViewRow(styles.row());
     
-    var _detailView = Ti.UI.createView(styles.detailView());
-    
-    var _leftView = Ti.UI.createView(styles.leftView());
-    
-    var _rightView = Ti.UI.createView(styles.rightView());
-    
-    var _leftImageView = Ti.UI.createImageView(styles.leftImageView());
-    _leftImageView.image = testImage;
-    
-    var priceLabel = Ti.UI.createLabel(styles.priceLabel());
-    priceLabel.text = "$" + rawData.price;
-
-    var titleLabel = Ti.UI.createLabel(styles.titleLabel());
-    titleLabel.text = rawData.title;
-    
-    var sellButton = Ti.UI.createButton(styles.sellButton());
-    
-    // detail view in the middle
-    _detailView.add(titleLabel);          
-    _detailView.add(priceLabel);
-    // left view
-    _leftView.add(_leftImageView);
-    // right view
-    _rightView.add(sellButton);
-    
-    //
-    // adding events
-    //
-    // for sell button
-    sellButton.addEventListener("click", function() {
-      alert("sending AJAX request to item with id = " + rawData.id);  
-    });
-    // for _detailView
-    _detailView.addEventListener("click", function() {
-      openItemWindow(rawData);
-    });
-    // also for left view
-    _leftView.addEventListener("click", function() {
-      openItemWindow(rawData);
-    });
+    for (var i = 0; i < rawData.length; i++) {
+	    var _leftImageView = Ti.UI.createImageView(styles.leftView());
+	    _leftImageView.image = testImage;
+	    var _midImageView = Ti.UI.createImageView(styles.detailView());
+	    _midImageView.image = testImage;
+	    var _rightImageView = Ti.UI.createImageView(styles.rightView());
+	    _rightImageView.image = testImage;
+			
+	    //
+	    // adding events
+	    //
+	    // for _detailView
+	    _midImageView.addEventListener("click", function() {
+	      openItemWindow(rawData);
+	    });
+	    // also for left view
+	    _rightImageView.addEventListener("click", function() {
+	      openItemWindow(rawData);
+	    });
+    }
     
     function openItemWindow(rawData){
       self.containingTab.open(Ti.UI.createWindow({
@@ -170,9 +141,9 @@ function InventoryWindow(title) {
       }));
     }
     
-    row.add(_leftView);
-    row.add(_rightView);
-    row.add(_detailView);
+    row.add(_leftImageView);
+    row.add(_midImageView);
+    row.add(_rightImageView);
     return row;
   }
   

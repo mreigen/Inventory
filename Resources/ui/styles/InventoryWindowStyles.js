@@ -1,36 +1,47 @@
 function InventoryWindowStyles() {
-  this.topViewHeight = 30;
+  this.topViewHeight = 0;
   this.topViewWidth = 320;
-  this.rowHeight = 70;
-  this.leftViewWidth = 70;
-  this.detailViewWidth = 170;
-  this.rightViewWidth = 80;
   
+  this.galleryImagePadding = 5;
+  this.galleryImageWidth = (Ti.Platform.displayCaps.platformWidth - this.galleryImagePadding) / 3 - this.galleryImagePadding;
+  this.galleryImageHeight = this.galleryImageWidth; //square
+  
+  this.rowHeight = this.galleryImageHeight + this.galleryImagePadding;
+  
+  this.borderColor = "#777";
   return this;
 };
 
 InventoryWindowStyles.prototype.detailView = function() {
   return {
-    width: this.detailViewWidth, 
-    height: this.rowHeight, 
-    left: this.leftViewWidth, 
-    top: 0
+    width: this.galleryImageWidth, 
+    height: this.galleryImageHeight, 
+    left: this.galleryImageWidth + this.galleryImagePadding * 2, 
+    top: this.galleryImagePadding,
+    borderColor: this.borderColor,
+    borderWidth: 1
   }
 }
 
 InventoryWindowStyles.prototype.leftView = function() {
   return {
-    width: this.leftViewWidth, 
-    height: this.rowHeight, 
-    left: 0
+    width: this.galleryImageWidth, 
+    height: this.galleryImageHeight,
+    left: this.galleryImagePadding,
+    top: this.galleryImagePadding,
+    borderColor: this.borderColor,
+    borderWidth: 1
   }
 }
 
 InventoryWindowStyles.prototype.rightView = function() {
   return {
-    width: this.rightViewWidth, 
-    height: this.rowHeight, 
-    right: 0
+    width: this.galleryImageWidth, 
+    height: this.galleryImageHeight,
+    right: this.galleryImagePadding,
+    top: this.galleryImagePadding,
+    borderColor: this.borderColor,
+    borderWidth: 1
   }
 }
 
@@ -84,7 +95,9 @@ InventoryWindowStyles.prototype.row = function() {
 
 InventoryWindowStyles.prototype.tableView = function() {
   return {
-    top: this.topViewHeight
+  	backgroundColor: "#BBB",
+    top: this.topViewHeight,
+    separatorColor: "transparent"
   }
 }
   
