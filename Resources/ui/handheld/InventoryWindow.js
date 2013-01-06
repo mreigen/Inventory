@@ -57,20 +57,21 @@ function InventoryWindow(title) {
   var testImage = "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTlhc34yq75661abqhBAleSexZPLJ5qUJkx5KoGfbYnPSoPc4b9";
   var testTitle = "Your item's title";
   var testPrice = "150";
+  var testDescription = "The quick brown fox jumps over the lazy dog";
   var testStatus = "sold";
   
   //var testItemData = {id: itemId, image: testImage, title: testTitle, price: testPrice, status: testStatus};
 	var input = [
-    {id: 1, image: testImage, title: testTitle + " 1", price: testPrice, status: testStatus},
-    {id: 2, image: testImage, title: testTitle + " 2", price: testPrice, status: testStatus},
-    {id: 3, image: testImage, title: testTitle + " 3", price: testPrice, status: testStatus},
-    {id: 4, image: testImage, title: testTitle + " 4", price: testPrice, status: testStatus},
-    {id: 5, image: testImage, title: testTitle + " 5", price: testPrice, status: testStatus},
-    {id: 6, image: testImage, title: testTitle + " 6", price: testPrice, status: testStatus},
-    {id: 7, image: testImage, title: testTitle + " 7", price: testPrice, status: testStatus},
-    {id: 8, image: testImage, title: testTitle + " 8", price: testPrice, status: testStatus},
-    {id: 9, image: testImage, title: testTitle + " 9", price: testPrice, status: testStatus},
-    {id: 10, image: testImage, title: testTitle + " 10", price: testPrice, status: testStatus},
+    {id: 1, image: testImage, title: testTitle + " 1", price: testPrice, status: testStatus, description: testDescription},
+    {id: 2, image: testImage, title: testTitle + " 2", price: testPrice, status: testStatus, description: testDescription},
+    {id: 3, image: testImage, title: testTitle + " 3", price: testPrice, status: testStatus, description: testDescription},
+    {id: 4, image: testImage, title: testTitle + " 4", price: testPrice, status: testStatus, description: testDescription},
+    {id: 5, image: testImage, title: testTitle + " 5", price: testPrice, status: testStatus, description: testDescription},
+    {id: 6, image: testImage, title: testTitle + " 6", price: testPrice, status: testStatus, description: testDescription},
+    {id: 7, image: testImage, title: testTitle + " 7", price: testPrice, status: testStatus, description: testDescription},
+    {id: 8, image: testImage, title: testTitle + " 8", price: testPrice, status: testStatus, description: testDescription},
+    {id: 9, image: testImage, title: testTitle + " 9", price: testPrice, status: testStatus, description: testDescription},
+    {id: 10, image: testImage, title: testTitle + " 10", price: testPrice, status: testStatus, description: testDescription},
 	];
 	
 	// create top view
