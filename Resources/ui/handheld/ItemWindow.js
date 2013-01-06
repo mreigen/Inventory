@@ -73,7 +73,9 @@ function ItemWindow(data) {
 	var tvsButton = Ti.UI.createTableViewSection();
 	
 	var rowButtons = Ti.UI.createTableViewRow({
-		height: 60
+		height: 60,
+		backgroundColor: "transparent",
+		borderColor: "transparent"
 	});
 	
 	var greenButton = Ti.UI.createButton({
@@ -99,7 +101,9 @@ function ItemWindow(data) {
 	var tvsReportButton = Ti.UI.createTableViewSection();
 	
 	var rowReportButtons = Ti.UI.createTableViewRow({
-		height: 60
+		height: 60,
+		backgroundColor: "transparent",
+		borderColor: "transparent"
 	});
 	
 	var redButton = Ti.UI.createButton({
