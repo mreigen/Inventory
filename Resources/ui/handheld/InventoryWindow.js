@@ -7,6 +7,7 @@ function InventoryWindow(title) {
 		backgroundColor:"white"
 	});
 	
+	/*
 	var search = Ti.UI.createSearchBar({
     showCancel: false,
     height: 44,
@@ -15,13 +16,14 @@ function InventoryWindow(title) {
   });
   
 	self.setTitleControl(search);
+	*/
 	
-	var rightButton = Titanium.UI.createButton({
+	var listToggleButton = Titanium.UI.createButton({
 		title: "List",
 		style:Titanium.UI.iPhone.SystemButtonStyle.PLAIN
   });
   
-	self.setRightNavButton(rightButton);
+	self.setRightNavButton(listToggleButton);
 	
 /*	
 	// create table view data object
@@ -81,15 +83,15 @@ function InventoryWindow(title) {
 	// create top view
 	var topView = Ti.UI.createView(styles.topView());
 	// labels on top view
-	var amountOwnedLabel = Ti.UI.createLabel(styles.amountOwnedLabel());
-	amountOwnedLabel.text = "$" + amountOwned.toString();
+	var itemViewButton = Ti.UI.createButton(styles.itemViewButton());
+	itemViewButton.title = "Items";
 	
-	var amountGotBackLabel = Ti.UI.createLabel(styles.amountGotBackLabel());
-	amountGotBackLabel.text = "$" + amountGotBack.toString();
+	var serviceViewButton = Ti.UI.createButton(styles.serviceViewButton());
+	serviceViewButton.title = "Services";
 	
 	// add labels to top view
-	topView.add(amountOwnedLabel);
-	topView.add(amountGotBackLabel);
+	topView.add(itemViewButton);
+	topView.add(serviceViewButton);
 	
 	
 	// create table view

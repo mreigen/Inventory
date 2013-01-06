@@ -1,5 +1,5 @@
 function InventoryWindowStyles() {
-  this.topViewHeight = 0;
+  this.topViewHeight = 30;
   this.topViewWidth = 320;
   
   this.galleryImagePadding = 5;
@@ -111,23 +111,25 @@ InventoryWindowStyles.prototype.topView = function() {
   }
 };
 
-InventoryWindowStyles.prototype.amountOwnedLabel = function() {
+InventoryWindowStyles.prototype.itemViewButton = function() {
   return {
     color: "#333",
     width: this.topViewWidth / 2,
     height: this.topViewHeight,
-    left: 20,
     textAlign: "center",
+    left: 0,
+    style:Titanium.UI.iPhone.SystemButtonStyle.PLAIN
   }  
 }
 
-InventoryWindowStyles.prototype.amountGotBackLabel = function() {
+InventoryWindowStyles.prototype.serviceViewButton = function() {
   return {
-    color: "#1C0C85",
+    color: "#333",
     width: this.topViewWidth / 2,
     height: this.topViewHeight,
-    right: 20,
     textAlign: "center",
+    right: 0,
+    style:Titanium.UI.iPhone.SystemButtonStyle.PLAIN
   }
 }
 
