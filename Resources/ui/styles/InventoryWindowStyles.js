@@ -9,6 +9,7 @@ function InventoryWindowStyles() {
   this.rowHeight = this.galleryImageHeight + this.galleryImagePadding;
   
   this.borderColor = "#777";
+  this.mainBodyBackgroundColor = "#BBB"
   return this;
 };
 
@@ -96,7 +97,7 @@ InventoryWindowStyles.prototype.row = function() {
 
 InventoryWindowStyles.prototype.tableView = function() {
   return {
-  	backgroundColor: "#BBB",
+  	backgroundColor: this.mainBodyBackgroundColor,
     top: this.topViewHeight,
     separatorColor: "transparent"
   }

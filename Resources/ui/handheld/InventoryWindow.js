@@ -2,6 +2,8 @@ function InventoryWindow(title) {
   var InventoryWindowStyles = require("ui/styles/InventoryWindowStyles");
   var styles = new InventoryWindowStyles();
   
+  var ItemWindow = require("ui/handheld/ItemWindow");
+  
 	var self = Ti.UI.createWindow({
 		title:title,
 		backgroundColor:"white"
@@ -19,8 +21,7 @@ function InventoryWindow(title) {
 	*/
 	
 	var listToggleButton = Titanium.UI.createButton({
-		title: "List",
-		style:Titanium.UI.iPhone.SystemButtonStyle.PLAIN
+		title: "List"
   });
   
 	self.setRightNavButton(listToggleButton);
@@ -57,8 +58,6 @@ function InventoryWindow(title) {
   var testTitle = "Your item's title";
   var testPrice = "150";
   var testStatus = "sold";
-  var amountOwned = 0;
-  var amountGotBack = 0;
   
   //var testItemData = {id: itemId, image: testImage, title: testTitle, price: testPrice, status: testStatus};
 	var input = [
@@ -96,11 +95,20 @@ function InventoryWindow(title) {
 	// add table view to the window
 	self.add(tableView);
 	
-	function buildTableView(input) {
+	function buildTableView(input, listView) {
+		if (typeof listView === "undefined") listView = false;
+		
 		var data = [];
-		for (var i = 0; i < input.length; i += 3) {
-	    var row = buildRow([input[i], input[i+1], input[i+2]]);
-	    data.push(row);
+		if (listView) {
+			for (var i = 0; i < input.length; i ++) {
+	    	var row = buildListRow(input[i]);
+	    	data.push(row);
+			}
+		} else {
+			for (var i = 0; i < input.length; i += 3) {
+	    	var row = buildImageRow([input[i], input[i+1], input[i+2]]);
+	    	data.push(row);
+			}
 		}
 		var _tableView = Ti.UI.createTableView(styles.tableView());
 		_tableView.data = data;
@@ -108,40 +116,36 @@ function InventoryWindow(title) {
 		return _tableView;
 	}
 	
-  function buildRow(rawData) {
+  function buildImageRow(rawData) {
     var row = Ti.UI.createTableViewRow(styles.row());
     
     for (var i = 0; i < rawData.length; i++) {
-	    var _leftImageView = Ti.UI.createButton(styles.leftView());
-	    _leftImageView.image = testImage;
-	    var _midImageView = Ti.UI.createButton(styles.detailView());
-	    _midImageView.image = testImage;
-	    var _rightImageView = Ti.UI.createButton(styles.rightView());
-	    _rightImageView.image = testImage;
-			
-	    //
-	    // adding events
-	    //
-	    // for _detailView
-	    _midImageView.addEventListener("click", function() {
-	      openItemWindow(rawData);
+    	
+    	if (rawData[i] == null) continue;
+    	
+    	var _buttonStyle = null;
+    	if (i == 0) {
+    		_buttonStyle = styles.leftView();
+    	} else if (i == 1) {
+    		_buttonStyle = styles.detailView();
+    	} else {
+    		_buttonStyle = styles.rightView();
+    	}
+	    var _imageButton = Ti.UI.createButton(_buttonStyle);
+	    _imageButton.image = rawData[i].image;
+	    _imageButton.data = rawData[i];
+	    _imageButton.addEventListener("click", function() {
+	      openItemWindow(this.data)
 	    });
-	    // also for left view
-	    _rightImageView.addEventListener("click", function() {
-	      openItemWindow(rawData);
-	    });
+	    
+	    row.add(_imageButton);
     }
     
-    function openItemWindow(rawData){
-      self.containingTab.open(Ti.UI.createWindow({
-        title: L("Item " + rawData.id),
-        backgroundColor: "white"
-      }));
+    function openItemWindow(data){
+    	var itemWindow = new ItemWindow(data);
+      self.containingTab.open(itemWindow);
     }
-    
-    row.add(_leftImageView);
-    row.add(_midImageView);
-    row.add(_rightImageView);
+		
     return row;
   }
   
