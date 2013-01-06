@@ -16,6 +16,13 @@ function InventoryWindow(title) {
   
 	self.setTitleControl(search);
 	
+	var rightButton = Titanium.UI.createButton({
+		title: "List",
+		style:Titanium.UI.iPhone.SystemButtonStyle.PLAIN
+  });
+  
+	self.setRightNavButton(rightButton);
+	
 /*	
 	// create table view data object
 	var data = [
