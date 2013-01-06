@@ -89,7 +89,8 @@ InventoryWindowStyles.prototype.sellButton = function() {
 
 InventoryWindowStyles.prototype.row = function() {
   return {
-    height: this.rowHeight
+    height: this.rowHeight,
+    selectedBackgroundColor: "transparent"
   }
 }
 

@@ -7,16 +7,14 @@ function InventoryWindow(title) {
 		backgroundColor:"white"
 	});
 	
-	/*
 	var search = Ti.UI.createSearchBar({
     showCancel: false,
-    height: 42,
+    height: 44,
     width: 260,
     top: 0
   });
   
 	self.setTitleControl(search);
-	*/
 	
 /*	
 	// create table view data object
@@ -114,11 +112,11 @@ function InventoryWindow(title) {
     var row = Ti.UI.createTableViewRow(styles.row());
     
     for (var i = 0; i < rawData.length; i++) {
-	    var _leftImageView = Ti.UI.createImageView(styles.leftView());
+	    var _leftImageView = Ti.UI.createButton(styles.leftView());
 	    _leftImageView.image = testImage;
-	    var _midImageView = Ti.UI.createImageView(styles.detailView());
+	    var _midImageView = Ti.UI.createButton(styles.detailView());
 	    _midImageView.image = testImage;
-	    var _rightImageView = Ti.UI.createImageView(styles.rightView());
+	    var _rightImageView = Ti.UI.createButton(styles.rightView());
 	    _rightImageView.image = testImage;
 			
 	    //
