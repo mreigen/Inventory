@@ -67,6 +67,58 @@ function ItemWindow(data) {
 	 * image section ends
 	 */
 	
+	/*
+	 * button section starts
+	 */
+	var tvsButton = Ti.UI.createTableViewSection();
+	
+	var rowButtons = Ti.UI.createTableViewRow({
+		height: 60
+	});
+	
+	var greenButton = Ti.UI.createButton({
+		top: 10,
+		height: 40,
+		width: "80%",
+		title: "Make an offer",
+		backgroundImage: "images/green-button-retina.png"
+	});
+	
+	rowButtons.add(greenButton);
+	
+	tvsButton.add(rowButtons);
+	
+	sectionData[2] = tvsButton;
+	/*
+	 * button section ends
+	 */
+	
+		/*
+	 * report button section starts
+	 */
+	var tvsReportButton = Ti.UI.createTableViewSection();
+	
+	var rowReportButtons = Ti.UI.createTableViewRow({
+		height: 60
+	});
+	
+	var redButton = Ti.UI.createButton({
+		top: 10,
+		height: 40,
+		width: "80%",
+		title: "Report",
+		backgroundImage: "images/red-button-retina.png"
+	});
+	
+	rowReportButtons.add(redButton);
+	
+	tvsReportButton.add(rowReportButtons);
+	
+	sectionData[4] = tvsReportButton;
+	/*
+	 * report button section ends
+	 */
+	
 	tableView.data = sectionData;
 	
 	self.add(tableView);
