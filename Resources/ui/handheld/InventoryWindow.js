@@ -74,12 +74,6 @@ function InventoryWindow(title) {
     {id: 10, image: testImage, title: testTitle + " 10", price: testPrice, status: testStatus},
 	];
 	
-	for (var i = 0; i < input.length; i += 3) {
-    var row = buildRow([input[i], input[i+1], input[i+2]]);
-    data.push(row);
-    amountOwned += parseInt(input[i].price);
-	}
-	
 	// create top view
 	var topView = Ti.UI.createView(styles.topView());
 	// labels on top view
@@ -93,29 +87,26 @@ function InventoryWindow(title) {
 	topView.add(itemViewButton);
 	topView.add(serviceViewButton);
 	
-	
 	// create table view
-	for (var i = 0; i < data.length; i++ ) { data[i].color = "#000"; data[i].font = {fontWeight:"bold"} };
-	var tableview = Ti.UI.createTableView(styles.tableView());
-	tableview.data = data;
+	var tableView = buildTableView(input);
 	
-	// create table view event listener
-	tableview.addEventListener("click", function(e) {
-		if (e.rowData.test) {
-			var ExampleWindow = require(e.rowData.test),
-				win = new ExampleWindow({
-					title:e.rowData.title,
-					containingTab:self.containingTab,
-					tabGroup:self.tabGroup
-				});
-			self.containingTab.open(win,{animated:true});
-		}
-	});
 	
 	// add top view to window
   self.add(topView);
 	// add table view to the window
-	self.add(tableview);
+	self.add(tableView);
+	
+	function buildTableView(input) {
+		var data = [];
+		for (var i = 0; i < input.length; i += 3) {
+	    var row = buildRow([input[i], input[i+1], input[i+2]]);
+	    data.push(row);
+		}
+		var _tableView = Ti.UI.createTableView(styles.tableView());
+		_tableView.data = data;
+		
+		return _tableView;
+	}
 	
   function buildRow(rawData) {
     var row = Ti.UI.createTableViewRow(styles.row());
